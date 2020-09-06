@@ -2,9 +2,8 @@
 #include <QtWidgets>
 #include "ui_DialogKeyboard.h"
 
-DialogKeyboard::DialogKeyboard(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::DialogKeyboard)
+DialogKeyboard::DialogKeyboard(QWidget *parent) : QDialog(parent),
+                                                  ui(new Ui::DialogKeyboard)
 {
     ui->setupUi(this);
 }
@@ -14,12 +13,14 @@ DialogKeyboard::~DialogKeyboard()
     delete ui;
 }
 
-void DialogKeyboard::keyPressEvent(QKeyEvent *event){
-    if(!drone)
-        return ;
+void DialogKeyboard::keyPressEvent(QKeyEvent *event)
+{
+    if (!drone)
+        return;
     char key = event->key();
     std::cout << "key:" << key << std::endl;
-    switch(key){
+    switch (key)
+    {
     case 'Z':
         //take off
         std::cout << "take off !" << std::endl;
@@ -50,80 +51,87 @@ void DialogKeyboard::keyPressEvent(QKeyEvent *event){
         break;
     case 'A':
         //tilt left
-        if( !drone->isVelMode)
-            drone->roll(-0.1f);
+        if (!drone->isVelMode)
+            drone->roll(0.0f, -1.0f, -0.1f);
         else
-            drone->pitch(0.7f);
-        
+            drone->pitch(1.0f, 0.0f, 0.7f);
+
         break;
     case 'D':
         //tilt right
-        if( !drone->isVelMode)
-            drone->roll(0.1f);
+        if (!drone->isVelMode)
+            drone->roll(0.0f, 1.0f, 0.1f);
         else
-            drone->pitch(-0.7f);
+            drone->pitch(-1.0f, -0.0f, -0.7f);
         break;
     case 'W':
         //title front
-        if( !drone->isVelMode)
-            drone->pitch(0.1f);
+        if (!drone->isVelMode)
+            drone->pitch(1.0f, 0.0f, 0.1f);
         else
-            drone->roll(0.7f);
+            drone->roll(0.0f, 1.0f, 0.7f);
         break;
     case 'S':
-        if( !drone->isVelMode)
-            drone->pitch(-0.1f);
+        if (!drone->isVelMode)
+            drone->pitch(-1.0f, -0.0f, -0.1f);
         else
-            drone->roll(-0.7f);
+            drone->roll(-0.0f, -1.0f, 0.7f);
         break;
-   
+
     case 'M':
         drone->velMode(!drone->isVelMode);
         break;
-        
+
     case 'T':
         testPositionControl();
         break;
-       
+
     default:
         //break;
-        if(!drone->isPosctrl)
+        if (!drone->isPosctrl)
             drone->hover();
     }
     event->accept();
 }
 
-void DialogKeyboard::keyReleaseEvent(QKeyEvent *event){
-    if(!drone)
-        return ;
+void DialogKeyboard::keyReleaseEvent(QKeyEvent *event)
+{
+    if (!drone)
+        return;
     char key = event->key();
-    if (!event->isAutoRepeat()){
+    if (!event->isAutoRepeat())
+    {
         std::cout << "key:" << key << " has been released !" << std::endl;
-        if( !drone->isPosctrl)
+        if (!drone->isPosctrl)
             drone->hover();
         event->accept();
-    }else{
+    }
+    else
+    {
         event->ignore();
     }
 }
 
-void DialogKeyboard::testPositionControl(){
-    if(drone->isPosctrl){
+void DialogKeyboard::testPositionControl()
+{
+    if (drone->isPosctrl)
+    {
         drone->posCtrl(false);
         std::cout << "position control off!" << std::endl;
     }
-    else{
+    else
+    {
         drone->posCtrl(true);
         std::cout << "(0.5,-1.5,6)" << std::endl;
-        drone->moveTo(0.5,-1.5,2);
+        drone->moveTo(0.5, -1.5, 2);
         sleep(5);
-        drone->moveTo(0.5,1.5,2);
+        drone->moveTo(0.5, 1.5, 2);
         sleep(5);
-        drone->moveTo(-3,1.5,2);
+        drone->moveTo(-3, 1.5, 2);
         sleep(5);
-        drone->moveTo(-3,-1.5,2);
+        drone->moveTo(-3, -1.5, 2);
         sleep(5);
-        drone->moveTo(0.5,-1.5,2);
+        drone->moveTo(0.5, -1.5, 2);
         sleep(5);
     }
-}    
+}

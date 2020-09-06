@@ -11,36 +11,38 @@
  * the corresponding topics
  */
 
-class DroneObjectROS{
+class DroneObjectROS
+{
 protected:
-    DroneObjectROS(){}
+    DroneObjectROS() {}
+
 public:
-    
-    DroneObjectROS(ros::NodeHandle& node){
+    DroneObjectROS(ros::NodeHandle &node)
+    {
         initROSVars(node);
     }
 
     bool isFlying;
     bool isPosctrl;
     bool isVelMode;
-    
+
     ros::Publisher pubTakeOff;
     ros::Publisher pubLand;
     ros::Publisher pubReset;
     ros::Publisher pubCmd;
     ros::Publisher pubPosCtrl;
     ros::Publisher pubVelMode;
-    
+
     geometry_msgs::Twist twist_msg;
-    
-    void initROSVars(ros::NodeHandle& node);
-    
+
+    void initROSVars(ros::NodeHandle &node);
+
     bool takeOff();
     bool land();
     bool hover();
     bool posCtrl(bool on);
     bool velMode(bool on);
-    
+
     // commands for controling ARDrone
     // pitch_lr = left-right tilt		(-1) to right		(+1)
     // roll_fb = front-back tilt 		(-1) to backwards	(+1)
@@ -49,8 +51,8 @@ public:
 
     bool move(float v_lr, float v_fb, float v_du, float w_lr);
     bool moveTo(float x, float y, float z);
-    bool pitch(float speed = 0.2);
-    bool roll(float speed = 0.2);
+    bool pitch(float x = 1.0, float y = 1.0, float speed = 0.2);
+    bool roll(float x = 1.0, float y = 1.0, float speed = 0.2);
     bool rise(float speed = 0.1);
     bool yaw(float speed = 0.1);
 };

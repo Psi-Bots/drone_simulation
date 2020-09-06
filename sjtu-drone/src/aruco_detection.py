@@ -39,7 +39,7 @@ class ArucoDetection:
         aruco_dict = aruco.Dictionary_get(aruco.DICT_ARUCO_ORIGINAL)
         parameters = aruco.DetectorParameters_create()
         parameters.minDistanceToBorder = 0
-        parameters.adaptiveThreshWinSizeMax = 53  
+        parameters.adaptiveThreshWinSizeMax = 1000  
 
         corners, ids, rejectedImgPoints = aruco.detectMarkers(blur,aruco_dict,parameters=parameters)
         out = aruco.drawDetectedMarkers(blur, corners, ids)

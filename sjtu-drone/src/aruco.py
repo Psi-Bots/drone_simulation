@@ -11,7 +11,7 @@ gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_ARUCO_ORIGINAL)
 parameters = aruco.DetectorParameters_create()
 parameters.minDistanceToBorder = 0
-parameters.adaptiveThreshWinSizeMax = 53
+parameters.adaptiveThreshWinSizeMax = 1000
 print(parameters)
 # Detect the markers.
 corners, ids, rejectedImgPoints = aruco.detectMarkers(blur,aruco_dict,parameters=parameters)

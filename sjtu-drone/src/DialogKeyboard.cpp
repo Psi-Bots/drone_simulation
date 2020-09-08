@@ -1,16 +1,32 @@
 #include <DialogKeyboard.h>
 #include <QtWidgets>
 #include "ui_DialogKeyboard.h"
+#include "ros/ros.h"
+#include "geometry_msgs/PoseStamped.h"
 
 DialogKeyboard::DialogKeyboard(QWidget *parent) : QDialog(parent),
-                                                  ui(new Ui::DialogKeyboard)
+                                                  ui(new Ui::DialogKeyboard), n("")
 {
     ui->setupUi(this);
+    // ros::NodeHandle n;
+    sub = n.subscribe("/aruco_single/pose", 10, &DialogKeyboard::poseCallback, this);
+    // ros::Subscriber sub = n.subscribe<geometry_msgs::PoseStamped>("/aruco_single/pose", 10, &DialogKeyboard::poseCallback, this);
 }
 
 DialogKeyboard::~DialogKeyboard()
 {
     delete ui;
+}
+
+void DialogKeyboard::poseCallback(const geometry_msgs::PoseStamped msg)
+{
+    // dronepose = msg;
+    dronepose.pose.position.x = 1;
+    dronepose.pose.position.y = 1;
+    dronepose.pose.position.z = 20;
+    ROS_INFO("I Heard");
+
+    std::cout << " I heard "  << std::endl;
 }
 
 void DialogKeyboard::keyPressEvent(QKeyEvent *event)
@@ -123,15 +139,15 @@ void DialogKeyboard::testPositionControl()
     {
         drone->posCtrl(true);
         std::cout << "(0.5,-1.5,6)" << std::endl;
-        drone->moveTo(0.5, -1.5, 2);
+        drone->moveTo(dronepose.pose.position.x, dronepose.pose.position.y, dronepose.pose.position.z);
         sleep(5);
-        drone->moveTo(0.5, 1.5, 2);
-        sleep(5);
-        drone->moveTo(-3, 1.5, 2);
-        sleep(5);
-        drone->moveTo(-3, -1.5, 2);
-        sleep(5);
-        drone->moveTo(0.5, -1.5, 2);
-        sleep(5);
+        // drone->moveTo(0.5, 1.5, 2);
+        // sleep(5);
+        // drone->moveTo(-3, 1.5, 2);
+        // sleep(5);
+        // drone->moveTo(-3, -1.5, 2);
+        // sleep(5);
+        // drone->moveTo(0.5, -1.5, 2);
+        // sleep(5);
     }
 }

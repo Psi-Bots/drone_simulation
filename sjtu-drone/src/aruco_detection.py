@@ -42,6 +42,9 @@ class ArucoDetection:
         parameters.adaptiveThreshWinSizeMax = 1000  
 
         corners, ids, rejectedImgPoints = aruco.detectMarkers(blur,aruco_dict,parameters=parameters)
+        print('corners', corners)
+        print('id', ids)
+        print('rej', rejectedImgPoints)
         out = aruco.drawDetectedMarkers(blur, corners, ids)
         # cv2.imwrite('/home/vishwas/drone_ws/src/sjtu-drone/Images/', out)
         # cv2.imwrite(os.path.join(self.image_path, "frame{:06d}.jpg".format(self.index)), out)

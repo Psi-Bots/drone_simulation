@@ -5,7 +5,7 @@
   <arg name="gui" default="false"/>
   <arg name="headless" value="false"/>
   <arg name="debug" value="false"/>
-  <arg name="world_name" default="$(find sjtu_drone)/worlds/contest.world"/>
+  <arg name="world_name" default="$(find sjtu_drone)/worlds/garching_kitchen.world"/>
  
   
   <!-- launch the custom world -->

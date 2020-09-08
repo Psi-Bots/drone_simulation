@@ -127,6 +127,8 @@
         <visualize>true</visualize>
 	<plugin name='front_camera' filename='libplugin_ros_cam.so'>
 	<imageTopicName>/drone/front_camera/image_raw</imageTopicName>
+  <cameraInfoTopicName>/drone/front_camera/camera_info</cameraInfoTopicName>
+  <frameId>front_camera_link</frameId>
 	</plugin> 
       </sensor>
 
@@ -155,6 +157,8 @@
         <visualize>true</visualize>
 	<plugin name='down_camera' filename='libplugin_ros_cam.so'>
 	<imageTopicName>/drone/down_camera/image_raw</imageTopicName>
+  <cameraInfoTopicName>/drone/down_camera/camera_info</cameraInfoTopicName>
+  <frameId>down_camera_link</frameId>
 	</plugin> 
       </sensor>
 

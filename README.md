@@ -56,3 +56,19 @@ downward looking camera: /drone/down_camera/image_raw
 ```
 # Demo of apriltag PID position controller #
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/sjSDr9rDs4s/0.jpg)](https://www.youtube.com/watch?v=sjSDr9rDs4s)
+
+# Objective #
+The objective is to land the drone precisely on an april tag placed anywhere in the simulation world.
+
+# Working of the controller #
+
+Two Proprtional controllers are used to complete the objective; one for each camera message. 
+The problem is divided into 2 main sections:
+
+1. Detecting the apriltag with the front camera:
+
+	A simple script is written in which the drone takes off and rises to a desired height. It then performs a full 360 degree yaw to scan the environment for a tag autonomously. As soon as the tag is detected, the position controller is activated. Position of the tag is updated and is fed as error to the controller. This error is minimized as the drone moves towards the marker.
+
+2. Detecting the apriltag with the down camera:
+
+	As the drone moves towards the tag, it is very likely that it loses sight of the tag. For this reason, the drone keeps moving towards the last updated direction. As the drone approaches the tag, it becomes visible in the down camera. The P controller for the down camera gets activated. The position of the tag is again fed as error to the controller and the x and y positional error is minimized such that the drone is right above the tag. Alongside the position correction, drone yaw is also corrected to align the drone's orientation to the apriltag. Once the desired error threshold is reached, land mode is activated.

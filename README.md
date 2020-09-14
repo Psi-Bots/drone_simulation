@@ -52,3 +52,5 @@ One can use [rqt_gui](http://wiki.ros.org/rqt_gui) to have an extensive amount o
 forward looking camera :  /drone/front_camera/image_raw
 downward looking camera: /drone/down_camera/image_raw
 ```
+# Demo of apriltag PID position controller #
+[![Alt text](https://www.youtube.com/watch?v=sjSDr9rDs4s/0.jpg)](https://www.youtube.com/watch?v=sjSDr9rDs4s)

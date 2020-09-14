@@ -1,0 +1,4 @@
+<launch>
+  <include file="$(find apriltag_ros)/launch/front.launch"></include>
+  <include file="$(find apriltag_ros)/launch/down.launch"></include>
+</launch>

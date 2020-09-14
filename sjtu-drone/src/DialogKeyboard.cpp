@@ -8,25 +8,11 @@ DialogKeyboard::DialogKeyboard(QWidget *parent) : QDialog(parent),
                                                   ui(new Ui::DialogKeyboard), n("")
 {
     ui->setupUi(this);
-    // ros::NodeHandle n;
-    sub = n.subscribe("/aruco_single/pose", 10, &DialogKeyboard::poseCallback, this);
-    // ros::Subscriber sub = n.subscribe<geometry_msgs::PoseStamped>("/aruco_single/pose", 10, &DialogKeyboard::poseCallback, this);
 }
 
 DialogKeyboard::~DialogKeyboard()
 {
     delete ui;
-}
-
-void DialogKeyboard::poseCallback(const geometry_msgs::PoseStamped msg)
-{
-    // dronepose = msg;
-    dronepose.pose.position.x = 1;
-    dronepose.pose.position.y = 1;
-    dronepose.pose.position.z = 20;
-    ROS_INFO("I Heard");
-
-    std::cout << " I heard "  << std::endl;
 }
 
 void DialogKeyboard::keyPressEvent(QKeyEvent *event)
@@ -68,7 +54,7 @@ void DialogKeyboard::keyPressEvent(QKeyEvent *event)
     case 'A':
         //tilt left
         if (!drone->isVelMode)
-            drone->roll(0.0f, -1.0f, -0.1f);
+            drone->roll(0.0f, 1.0f, 0.1f);
         else
             drone->pitch(1.0f, 0.0f, 0.7f);
 
@@ -76,7 +62,7 @@ void DialogKeyboard::keyPressEvent(QKeyEvent *event)
     case 'D':
         //tilt right
         if (!drone->isVelMode)
-            drone->roll(0.0f, 1.0f, 0.1f);
+            drone->roll(0.0f, -1.0f, -0.1f);
         else
             drone->pitch(-1.0f, -0.0f, -0.7f);
         break;
@@ -99,7 +85,7 @@ void DialogKeyboard::keyPressEvent(QKeyEvent *event)
         break;
 
     case 'T':
-        testPositionControl();
+        drone->Autoflight();
         break;
 
     default:
@@ -139,15 +125,14 @@ void DialogKeyboard::testPositionControl()
     {
         drone->posCtrl(true);
         std::cout << "(0.5,-1.5,6)" << std::endl;
-        drone->moveTo(dronepose.pose.position.x, dronepose.pose.position.y, dronepose.pose.position.z);
         sleep(5);
-        // drone->moveTo(0.5, 1.5, 2);
-        // sleep(5);
-        // drone->moveTo(-3, 1.5, 2);
-        // sleep(5);
-        // drone->moveTo(-3, -1.5, 2);
-        // sleep(5);
-        // drone->moveTo(0.5, -1.5, 2);
-        // sleep(5);
+        drone->moveTo(0.5, 1.5, 2);
+        sleep(5);
+        drone->moveTo(-3, 1.5, 2);
+        sleep(5);
+        drone->moveTo(-3, -1.5, 2);
+        sleep(5);
+        drone->moveTo(0.5, -1.5, 2);
+        sleep(5);
     }
 }

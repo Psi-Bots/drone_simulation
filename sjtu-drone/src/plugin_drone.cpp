@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <iostream>
 
-
 namespace gazebo {
 
 DroneSimpleController::DroneSimpleController()
@@ -47,7 +46,7 @@ void DroneSimpleController::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
   posctrl_topic_ = "drone/posctrl";
   gt_topic_ = "drone/gt_pose";
   switch_mode_topic_ = "/drone/vel_mode";
-  
+
   if (!_sdf->HasElement("imuTopic"))
     imu_topic_.clear();
   else
@@ -351,6 +350,19 @@ void DroneSimpleController::UpdateDynamics(double dt){
     }
     
     
+    odom_trans.header.stamp = ros::Time::now();
+    odom_trans.header.frame_id = "odom";
+    odom_trans.child_frame_id = "base_link";
+
+    odom_trans.transform.translation.x = pose.Pos().X();
+    odom_trans.transform.translation.y = pose.Pos().Y();
+    odom_trans.transform.translation.z = pose.Pos().Z();
+    odom_trans.transform.rotation.w = pose.Rot().W();
+    odom_trans.transform.rotation.x = pose.Rot().X();
+    odom_trans.transform.rotation.y = pose.Rot().Y();
+    odom_trans.transform.rotation.z = pose.Rot().Z();
+    odom_broadcaster.sendTransform(odom_trans);
+
     //publish the ground truth pose of the drone to the ROS topic
     geometry_msgs::Pose gt_pose;
     gt_pose.position.x = pose.Pos().X();

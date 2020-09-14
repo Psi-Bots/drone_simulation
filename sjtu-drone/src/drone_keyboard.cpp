@@ -12,8 +12,10 @@ int main(int argc, char** argv){
     DroneObjectROS drone(node);
       
     DialogKeyboard dlg_keyboard;
+    ros::Rate looprate(10);
     dlg_keyboard.setDrone(drone);
     dlg_keyboard.show();
-  
+    ros::AsyncSpinner spinner(0);
+    spinner.start();
     return app.exec();
 }

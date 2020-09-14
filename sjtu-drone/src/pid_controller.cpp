@@ -12,8 +12,8 @@ PIDController::~PIDController(){
 
 void PIDController::Load(sdf::ElementPtr _sdf, const std::string& prefix)
 {
-  gain_p = 5.0;
-  gain_d = 1.0;
+  gain_p = 2.0;
+  gain_d = 0.5;
   gain_i = 0.0;
   time_constant = 0.0;
   limit = -1.0;

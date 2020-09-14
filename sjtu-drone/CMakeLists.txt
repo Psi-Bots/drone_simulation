@@ -6,11 +6,15 @@ project(sjtu_drone)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS 
     roscpp
+    tf
     rospy
     std_msgs
     sensor_msgs
+    apriltag_ros
     image_transport
-    message_generation)
+    message_generation
+    geometry_msgs
+    joy)
 
 find_package(gazebo REQUIRED)
 ## System dependencies are found with CMake's conventions
@@ -39,7 +43,7 @@ set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 ###################################
 catkin_package(
    INCLUDE_DIRS include
-   CATKIN_DEPENDS roscpp rospy image_transport std_msgs sensor_msgs geometry_msgs message_runtime gazebo_ros
+   CATKIN_DEPENDS roscpp rospy image_transport std_msgs sensor_msgs geometry_msgs message_runtime gazebo_ros tf joy
 )
 
 ################# 1. A system plugin for gazebo to initialize ROS  #############
@@ -124,13 +128,18 @@ set(QT_LIBRARIES Qt5::Widgets)
 qt5_wrap_cpp(QT_MOC include/DialogKeyboard.h)
 qt5_add_resources(RESOURCES include/drone_keyboard.qrc)
 
-
 add_executable( drone_keyboard
   src/DialogKeyboard.cpp
   src/drone_object_ros.cpp
   src/drone_keyboard.cpp
   ${RESOURCES}
   ${QT_MOC}
+)
+
+
+add_dependencies(
+  drone_keyboard apriltag_ros_generate_messages_cpp
+
 )
 
 target_link_libraries( drone_keyboard

@@ -54,3 +54,6 @@ build
 bin
 plugins
 *.o
+.vscode/settings.json
+.gitignore
+.vscode/c_cpp_properties.json

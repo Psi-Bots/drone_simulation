@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "drone_object_ros.h"
+#include "geometry_msgs/PoseStamped.h"
 
 namespace Ui {
 class DialogKeyboard;
@@ -19,9 +20,15 @@ public:
     void setDrone(DroneObjectROS& drone_){
         this->drone = &drone_;
     }
+    
     void keyPressEvent(QKeyEvent *event);
     virtual void keyReleaseEvent(QKeyEvent *event);
     void testPositionControl();
+    ros::NodeHandle n;
+    ros::Subscriber sub;
+    geometry_msgs::PoseStamped dronepose;
+    void poseCallback(const geometry_msgs::PoseStamped msg);
+
 private:
     Ui::DialogKeyboard *ui;
 };

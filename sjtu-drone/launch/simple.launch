@@ -5,13 +5,19 @@
   <arg name="gui" default="false"/>
   <arg name="headless" value="false"/>
   <arg name="debug" value="false"/>
-  <arg name="world_name" default="$(find sjtu_drone)/worlds/garching_kitchen.world"/>
+  <arg name="world_name" default="$(find sjtu_drone)/worlds/contest.world"/>
  
   
   <!-- launch the custom world -->
    <include file="$(find gazebo_ros)/launch/empty_world.launch" >
-        <arg name="paused" value="True"/>
+        <arg name="paused" value="False"/>
         <arg name="world_name" value="$(arg world_name)"/>
         <arg name="verbose" value="True"/>
    </include>
+
+  <!-- <node name="image_proc" pkg="image_proc" type="image_proc" >
+    <remap from="image_raw" to="/drone/down_camera/image_raw" />
+    <remap from="camera_info" to="/drone/down_camera/camera_info" />
+  </node> -->
+
 </launch>

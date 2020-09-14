@@ -61,9 +61,29 @@
       <direction>0.000000 0.000000 -1.000000</direction>
       <cast_shadows>false</cast_shadows>
     </light>
+    <model name='Apriltag36_11_00000'>
+      <link name='main'>
+        <pose frame=''>-2 -2 0 0 0 0</pose>
+        <visual name='main_Visual'>
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.01</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://Apriltag36_11_00000/materials/scripts</uri>
+              <uri>model://Apriltag36_11_00000/materials/textures</uri>
+              <name>Apriltag36_11_00000</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+      <static>1</static>
+    </model>
     <model name="garching_kitchen">
       <link name="garching_kitchen_link">
-        <pose>0 0 0 0 0 0</pose>
+        <pose>0 0 -0.439999 0 0 0</pose>
         <collision name="garching_kitchen_collision">
           <geometry>
             <mesh>
